@@ -267,7 +267,11 @@ namespace DBManager
                     if (table.Columns[i].Type == ColumnType.Enum)
                     {
                         var cell = new DataGridViewComboBoxCell();
-                        cell.Items.AddRange(table.Columns[i].AvailableValues);
+                        foreach(var value in table.Columns[i].AvailableValues)
+                        {
+                            cell.Items.Add(value);
+                        }
+                        cell.Value = row.Values[i];
                         newRow.Cells.Add(cell);
                     }
                     else

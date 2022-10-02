@@ -38,7 +38,7 @@ namespace DBManager
                 var streamReader = new StreamReader(path);
                 _database = new Database(streamReader.ReadLine(), path);
                 string file = streamReader.ReadToEnd();
-                ReadTables(file.Split(_tablesSeparator));
+                ReadTables(file.Split(_tablesSeparator, StringSplitOptions.RemoveEmptyEntries));
                 streamReader.Close();
 
                 return true;
@@ -65,7 +65,7 @@ namespace DBManager
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -110,12 +110,12 @@ namespace DBManager
         {
             foreach(var table in tables)
             {
-                var tableData = table.Replace("\r\n", "\n").Split('\n').ToList();
+                var tableData = table.Replace("\r\n", "\n").Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
                 var newTable = new Table(tableData[0]);
                 _database.Tables.Add(newTable);
                 ReadColumns(tableData[1], newTable);
                 tableData.RemoveAt(0);
-                tableData.RemoveAt(1);
+                tableData.RemoveAt(0);
                 ReadRows(tableData, newTable);
 
             }
@@ -165,12 +165,14 @@ namespace DBManager
         }
         private void ReadColumns(string data, Table table)
         {
-            var columns = data.Split(_columnsSeparator).ToList();
+            var columns = data.Split(_columnsSeparator, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (var column in columns)
             {
                 var columnData = column.Split('\t', StringSplitOptions.RemoveEmptyEntries).ToList();
                 Enum.TryParse(columnData[1], out ColumnType columnType);
-                var availableValues = columnData[2].Split(',').ToList();
+                var availableValues = new List<string>();
+                if (columnData.Count > 2)
+                    availableValues = columnData[2]?.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
                 table.Columns.Add(new Column(columnData[0], columnType, availableValues));
             }
         }
@@ -178,7 +180,7 @@ namespace DBManager
         {
             foreach (var column in table.Columns)
             {
-                streamWriter.WriteLine(table.Name + '\t' + column.Type.ToString() + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
+                streamWriter.Write(column.Name + '\t' + column.Type.ToString() + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
 
             }
 
@@ -216,7 +218,7 @@ namespace DBManager
         {
             foreach (var row in table.Rows)
             {
-                streamWriter.WriteLine(string.Join('\t', row));
+                streamWriter.WriteLine(string.Join('\t', row.Values));
 
             }
 

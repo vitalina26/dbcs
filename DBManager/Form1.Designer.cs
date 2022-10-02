@@ -43,12 +43,12 @@ namespace DBManager
             this.deleteTableMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteColumnMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRowMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.differenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.createDatabaseDialog = new System.Windows.Forms.SaveFileDialog();
             this.tablesDataGridView = new System.Windows.Forms.DataGridView();
             this.tablesTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.differenceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablesDataGridView)).BeginInit();
             this.tablesTabs.SuspendLayout();
@@ -178,6 +178,14 @@ namespace DBManager
             this.deleteRowMenuItem.Text = "Row";
             this.deleteRowMenuItem.Click += new System.EventHandler(this.DeleteRow);
             // 
+            // differenceMenuItem
+            // 
+            this.differenceMenuItem.Enabled = false;
+            this.differenceMenuItem.Name = "differenceMenuItem";
+            this.differenceMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.differenceMenuItem.Text = "Difference";
+            this.differenceMenuItem.Click += new System.EventHandler(this.Difference);
+            // 
             // tablesDataGridView
             // 
             this.tablesDataGridView.AllowUserToAddRows = false;
@@ -200,6 +208,7 @@ namespace DBManager
             this.tablesTabs.SelectedIndex = 0;
             this.tablesTabs.Size = new System.Drawing.Size(800, 28);
             this.tablesTabs.TabIndex = 1;
+            this.tablesTabs.SelectedIndexChanged += new System.EventHandler(this.TableChanged);
             // 
             // tabPage1
             // 
@@ -210,14 +219,6 @@ namespace DBManager
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // differenceMenuItem
-            // 
-            this.differenceMenuItem.Enabled = false;
-            this.differenceMenuItem.Name = "differenceMenuItem";
-            this.differenceMenuItem.Size = new System.Drawing.Size(73, 20);
-            this.differenceMenuItem.Text = "Difference";
-            this.differenceMenuItem.Click += new System.EventHandler(this.Difference);
             // 
             // Form1
             // 

@@ -19,8 +19,11 @@ namespace DBManager
         {
             InitializeComponent();
             var tablesNames = _dBManager.Database.Tables.Select(i => i.Name).ToArray();
-            firstTableComboBox.Items.AddRange(tablesNames);
-            secondTableComboBox.Items.AddRange(tablesNames);
+            foreach (var value in tablesNames)
+            {
+                firstTableComboBox.Items.Add(value);
+                secondTableComboBox.Items.Add(value);
+            }
         }
 
         private void SearchDifference(object sender, EventArgs e)
@@ -29,6 +32,7 @@ namespace DBManager
                 return;
             var res = _dBManager.Difference(_dBManager.Database.Tables.FirstOrDefault(i => i.Name == firstTableComboBox.SelectedItem.ToString()),
                 (_dBManager.Database.Tables.FirstOrDefault(i => i.Name == secondTableComboBox.SelectedItem.ToString())));
+            RenderTable(res);
         }
         private void RenderTable(Table table)
         {
@@ -52,7 +56,11 @@ namespace DBManager
                     if (table.Columns[i].Type == ColumnType.Enum)
                     {
                         var cell = new DataGridViewComboBoxCell();
-                        cell.Items.AddRange(table.Columns[i].AvailableValues);
+                        foreach (var value in table.Columns[i].AvailableValues)
+                        {
+                            cell.Items.Add(value);
+                        }
+                        cell.Value = row.Values[i];
                         newRow.Cells.Add(cell);
                     }
                     else
