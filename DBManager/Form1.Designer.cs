@@ -33,9 +33,7 @@ namespace DBManager
             this.databaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDatabaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveDatabaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTableMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addColumnMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addRowMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +47,7 @@ namespace DBManager
             this.tablesDataGridView = new System.Windows.Forms.DataGridView();
             this.tablesTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.saveButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablesDataGridView)).BeginInit();
             this.tablesTabs.SuspendLayout();
@@ -71,8 +70,7 @@ namespace DBManager
             // 
             this.databaseMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openDatabaseMenuItem,
-            this.createDatabaseMenuItem,
-            this.saveDatabaseMenuItem});
+            this.createDatabaseMenuItem});
             this.databaseMenuItem.Name = "databaseMenuItem";
             this.databaseMenuItem.Size = new System.Drawing.Size(67, 20);
             this.databaseMenuItem.Text = "Database";
@@ -91,18 +89,9 @@ namespace DBManager
             this.createDatabaseMenuItem.Text = "Create";
             this.createDatabaseMenuItem.Click += new System.EventHandler(this.CreateDatabase);
             // 
-            // saveDatabaseMenuItem
-            // 
-            this.saveDatabaseMenuItem.Enabled = false;
-            this.saveDatabaseMenuItem.Name = "saveDatabaseMenuItem";
-            this.saveDatabaseMenuItem.Size = new System.Drawing.Size(108, 22);
-            this.saveDatabaseMenuItem.Text = "Save";
-            this.saveDatabaseMenuItem.Click += new System.EventHandler(this.SaveDatabase);
-            // 
             // addMenuItem
             // 
             this.addMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addTableMenuItem,
             this.addColumnMenuItem,
             this.addRowMenuItem});
             this.addMenuItem.Enabled = false;
@@ -110,19 +99,11 @@ namespace DBManager
             this.addMenuItem.Size = new System.Drawing.Size(41, 20);
             this.addMenuItem.Text = "Add";
             // 
-            // addTableMenuItem
-            // 
-            this.addTableMenuItem.Enabled = false;
-            this.addTableMenuItem.Name = "addTableMenuItem";
-            this.addTableMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.addTableMenuItem.Text = "Table";
-            this.addTableMenuItem.Click += new System.EventHandler(this.CreateTable);
-            // 
             // addColumnMenuItem
             // 
             this.addColumnMenuItem.Enabled = false;
             this.addColumnMenuItem.Name = "addColumnMenuItem";
-            this.addColumnMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.addColumnMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addColumnMenuItem.Text = "Column";
             this.addColumnMenuItem.Click += new System.EventHandler(this.CreateColumn);
             // 
@@ -130,7 +111,7 @@ namespace DBManager
             // 
             this.addRowMenuItem.Enabled = false;
             this.addRowMenuItem.Name = "addRowMenuItem";
-            this.addRowMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.addRowMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addRowMenuItem.Text = "Row";
             this.addRowMenuItem.Click += new System.EventHandler(this.CreateRow);
             // 
@@ -191,11 +172,11 @@ namespace DBManager
             this.tablesDataGridView.AllowUserToAddRows = false;
             this.tablesDataGridView.AllowUserToDeleteRows = false;
             this.tablesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablesDataGridView.Location = new System.Drawing.Point(0, 57);
+            this.tablesDataGridView.Location = new System.Drawing.Point(0, 54);
             this.tablesDataGridView.Name = "tablesDataGridView";
             this.tablesDataGridView.RowTemplate.Height = 25;
             this.tablesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.tablesDataGridView.Size = new System.Drawing.Size(800, 392);
+            this.tablesDataGridView.Size = new System.Drawing.Size(800, 343);
             this.tablesDataGridView.TabIndex = 0;
             this.tablesDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.BeginEditCell);
             this.tablesDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.EndEditCell);
@@ -208,7 +189,7 @@ namespace DBManager
             this.tablesTabs.SelectedIndex = 0;
             this.tablesTabs.Size = new System.Drawing.Size(800, 28);
             this.tablesTabs.TabIndex = 1;
-            this.tablesTabs.SelectedIndexChanged += new System.EventHandler(this.TableChanged);
+            this.tablesTabs.Click += new System.EventHandler(this.TableChanged);
             // 
             // tabPage1
             // 
@@ -217,14 +198,25 @@ namespace DBManager
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(792, 0);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "+";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(655, 403);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(133, 35);
+            this.saveButton.TabIndex = 2;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.SaveDatabase);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tablesTabs);
             this.Controls.Add(this.tablesDataGridView);
             this.Controls.Add(this.menuStrip1);
@@ -248,12 +240,10 @@ namespace DBManager
         private System.Windows.Forms.ToolStripMenuItem openDatabaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createDatabaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addTableMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addColumnMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addRowMenuItem;
         private System.Windows.Forms.OpenFileDialog openDatabaseDialog;
         private System.Windows.Forms.SaveFileDialog createDatabaseDialog;
-        private System.Windows.Forms.ToolStripMenuItem saveDatabaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteDatabaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteTableMenuItem;
@@ -263,6 +253,7 @@ namespace DBManager
         private System.Windows.Forms.TabControl tablesTabs;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStripMenuItem differenceMenuItem;
+        private System.Windows.Forms.Button saveButton;
     }
 }
 

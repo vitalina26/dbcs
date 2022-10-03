@@ -59,11 +59,10 @@ namespace DBManager
                         RenderTable(_dBManager.Database.Tables[0]);
                     createDatabaseMenuItem.Enabled = false;
                     openDatabaseMenuItem.Enabled = false;
-                    saveDatabaseMenuItem.Enabled = true;
+                    saveButton.Enabled = true;
                     deleteMenuItem.Enabled = true;
                     deleteDatabaseMenuItem.Enabled = true;
                     addMenuItem.Enabled = true;
-                    addTableMenuItem.Enabled = true;
                     if (_dBManager.Database.Tables.Count > 1)
                         differenceMenuItem.Enabled = true;
                 }
@@ -108,16 +107,14 @@ namespace DBManager
                     }
                 }
                 Text = "Database manger " + _dBManager.Database.Name;
-
-                tablesTabs.TabPages.Clear();
+                InitTabs();
                 ClearTable();
                 createDatabaseMenuItem.Enabled = false;
                 openDatabaseMenuItem.Enabled = false;
-                saveDatabaseMenuItem.Enabled = true;
+                saveButton.Enabled = true;
                 deleteMenuItem.Enabled = true;
                 deleteDatabaseMenuItem.Enabled = true;
                 addMenuItem.Enabled = true;
-                addTableMenuItem.Enabled = true;
 
             }
             catch (Exception)
@@ -138,7 +135,7 @@ namespace DBManager
 
                     createDatabaseMenuItem.Enabled = true;
                     openDatabaseMenuItem.Enabled = true;
-                    saveDatabaseMenuItem.Enabled = false;
+                    saveButton.Enabled = false;
                     deleteMenuItem.Enabled = false;
                     addMenuItem.Enabled = false;
                 }
@@ -174,7 +171,7 @@ namespace DBManager
                 return;
 
         }
-        private void CreateTable(object sender, EventArgs e)
+        private void CreateTable()
         {
             try
             {
@@ -292,12 +289,17 @@ namespace DBManager
             List<string> tableNames = _dBManager.Database.Tables.Select(i => i.Name).ToList();
             foreach (string name in tableNames)
                 tablesTabs.TabPages.Add(name);
+            tablesTabs.TabPages.Add("+");
             tablesTabs.SelectedIndex = 0;
 
         }
         private void TableChanged(object sender, EventArgs e)
         {
-            if (tablesTabs.SelectedIndex != -1)
+            if(_dBManager.Database != null && tablesTabs.SelectedIndex == (_dBManager.Database?.Tables?.Count ?? 0))
+            {
+                CreateTable();
+            }
+            else if (tablesTabs.SelectedIndex != -1)
             {
                 RenderTable(_dBManager.Database.Tables[tablesTabs.SelectedIndex]);
                 addColumnMenuItem.Enabled = true;
@@ -369,6 +371,7 @@ namespace DBManager
                         addRowMenuItem.Enabled = false;
                         deleteRowMenuItem.Enabled = false;
                     }
+                    RenderTable(CurrentTable);
                 }
 
             }
@@ -406,6 +409,7 @@ namespace DBManager
                     _dBManager.DeleteRow(CurrentTable, tablesDataGridView.CurrentCell.RowIndex);
                     if (tablesDataGridView.RowCount == 0)
                         deleteRowMenuItem.Enabled = false;
+                    RenderTable(CurrentTable);
                 }
             }
             catch (Exception)

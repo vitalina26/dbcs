@@ -272,7 +272,7 @@ namespace DBManager
                         newRow.Values.Add(row.Values[i]);
                     }
                 }
-                if (!tempRows.Any(r => r.Values.SequenceEqual(row.Values)))
+                if (!tempRows.Any(r => r.Values.SequenceEqual(newRow.Values)))
                     result.Rows.Add(newRow);
             }
             return result;
