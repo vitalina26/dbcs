@@ -1,0 +1,51 @@
+﻿@page "/"
+@using DBManager.WebUi.Components
+<div class="card-component grid-card w-100 ">
+    <div class="card-component-header">
+        <div class="card-component-header-text">Databases</div>
+    </div>
+    <div class="table-custom-body">
+        <div class="data-grid-container">
+            <table class="data-grid ">
+                <thead>
+                <th>Name</th>
+                <th>Path</th>
+                <th style="width: 3rem; " @onclick="Open">
+                    Upload
+                </th>
+                <th style="width: 3rem; " @onclick="Create">
+                    <div class="add-icon"></div>
+                </th>
+                </thead>
+                <tbody>
+                @foreach (var database in AllDatabases)
+                {
+                    <tr>
+                        <td class="data-grid-cell">
+                            @database.Name
+                        </td>
+                        <td class="data-grid-cell">
+                            @database.Path
+                        </td>
+                        <td class="data-grid-cell" style="width: 3rem;" @onclick="() => OpenDatabase(database.Path)">
+                            <div class="edit-icon"></div>
+                        </td>
+                        <td class="data-grid-cell" style="width: 3rem;" @onclick="@(() => Delete(database.Path))">
+                            <div class="delete-icon"></div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<Modal @ref="CreateModal" Title="Create database">
+    <CreateDatabaseModal Result="(res) => { if (res) ReloadDatabases();}"/>
+</Modal>
+<Modal @ref="OpenModal" Title="Open database">
+    <OpenDatabaseModal Result="(res) => { if (!string.IsNullOrEmpty(res)) OpenDatabase(res);}"/>
+</Modal>
+<Modal @ref="DeleteModal" Title="Open database">
+    <ConfirmationModal  Message="Are you sure you want to delete table?" Result="(res) => { if (res) DeleteDatabase();}"/>
+</Modal>

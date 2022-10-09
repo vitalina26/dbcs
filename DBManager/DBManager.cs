@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DBManager.Models;
+using DBManager.Entities.Enums;
+using DBManager.Entities.Models;
+
 namespace DBManager
 {
     public class DBManager

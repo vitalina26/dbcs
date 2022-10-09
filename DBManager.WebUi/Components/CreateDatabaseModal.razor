@@ -1,0 +1,37 @@
+<div class="database-create">
+    <EditForm EditContext="_editContext">
+        <DataAnnotationsValidator/>
+
+        <div class="base-input-container long">
+            <label class="base-input">
+                <InputText placeholder=" " name="name" @bind-Value="Database.Name"/>
+                <span>Name</span>
+                <ValidationMessage For="() => Database.Name"></ValidationMessage>
+            </label>
+        </div>
+        <div class="base-input-container w-100">
+            <label class="base-input">
+                <div class="upload-version-data">
+                    <div>@(!string.IsNullOrEmpty(Database.Path) ? Database.Path : "No path chosen")</div>
+                    <label class="button edit-button">
+                        <InputFile OnChange="HandlePath" hidden="hidden" accept=".txt"/>
+                    </label>
+                </div>
+            </label>
+            <ValidationMessage For="() => Database.Path"></ValidationMessage>
+        </div>
+    </EditForm>
+
+
+</div>
+<div class="modal-footer">
+    <button class="button button-secondary" data-dismiss="modal" @onclick="Cancel">
+        Cancel
+    </button>
+    <button class="button button-primary" @onclick="Create">
+        Create
+    </button>
+
+</div>
+
+<Toast @ref="Toast"/>

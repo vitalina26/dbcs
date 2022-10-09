@@ -1,0 +1,31 @@
+@page "/tableDetails/{TableName}"
+<div class="card-component grid-card w-100 ">
+    <div class="card-component-header">
+        <div class="card-component-header-text">@Table.Name</div>
+    </div>
+    <div class="table-custom-body">
+        <div class="data-grid-container">
+            <table class="data-grid ">
+                <thead>
+                @foreach (var table in Table.Columns)
+                {
+                    <th>@table.Name</th>
+                }
+                </thead>
+                <tbody>
+                @foreach (var row in Table.Rows)
+                {
+                    <tr>
+                        @foreach (var cell in row.Values)
+                        {
+                            <td class="data-grid-cell">
+                                @cell
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
