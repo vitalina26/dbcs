@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32413.511
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32422.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager", "DBManager\DBManager.csproj", "{E6CA0F53-E556-4A64-9471-E6810A4DD5CE}"
 EndProject
@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Business", "DBManager.Business\DBManager.Business.csproj", "{8F92D718-2FDE-4976-AB6A-2156EDAE1D6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.WebUi", "DBManager.WebUi\DBManager.WebUi.csproj", "{ACFEAEA9-32A3-4BBD-B6E9-269257611FB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager", "DBManager\DBManager.csproj", "{E6CA0F53-E556-4A64-9471-E6810A4DD5CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{B2AAA3FC-B6B6-48F3-8200-A05BA4AACD52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +26,10 @@ Global
 		{E6CA0F53-E556-4A64-9471-E6810A4DD5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6CA0F53-E556-4A64-9471-E6810A4DD5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6CA0F53-E556-4A64-9471-E6810A4DD5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2AAA3FC-B6B6-48F3-8200-A05BA4AACD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2AAA3FC-B6B6-48F3-8200-A05BA4AACD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2AAA3FC-B6B6-48F3-8200-A05BA4AACD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2AAA3FC-B6B6-48F3-8200-A05BA4AACD52}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A971735-386B-4FD3-A356-15B0919558D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A971735-386B-4FD3-A356-15B0919558D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A971735-386B-4FD3-A356-15B0919558D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
