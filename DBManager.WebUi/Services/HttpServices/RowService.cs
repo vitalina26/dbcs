@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DBManager.WebUi.Models;
 
-namespace DBManager.WebUi.Services
+namespace DBManager.WebUi.Services.HttpServices
 {
     public class RowService : HttpServiceBase
     {

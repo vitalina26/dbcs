@@ -20,7 +20,7 @@
 }
 .data-grid thead{
     width: 100%;
-    display: flex;
+    display: table;
     table-layout:fixed;
     background: transparent!important;
     border: none!important;
@@ -41,7 +41,6 @@
 }
 .data-grid thead th{
     width: 100%;
-    display: flex;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

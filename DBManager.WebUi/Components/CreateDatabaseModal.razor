@@ -9,17 +9,24 @@
                 <ValidationMessage For="() => Database.Name"></ValidationMessage>
             </label>
         </div>
-        <div class="base-input-container w-100">
+        <div class="base-input-container long">
             <label class="base-input">
-                <div class="upload-version-data">
-                    <div>@(!string.IsNullOrEmpty(Database.Path) ? Database.Path : "No path chosen")</div>
-                    <label class="button edit-button">
-                        <InputFile OnChange="HandlePath" hidden="hidden" accept=".txt"/>
-                    </label>
-                </div>
+                <InputText placeholder=" " name="name" @bind-Value="Database.Path"/>
+                <span>Path</span>
+                <ValidationMessage For="() => Database.Path"></ValidationMessage>
             </label>
-            <ValidationMessage For="() => Database.Path"></ValidationMessage>
         </div>
+        @* <div class="base-input-container w-100"> *@
+        @*     <label class="base-input"> *@
+        @*         <div class="upload-version-data"> *@
+        @*             <div>@(!string.IsNullOrEmpty(Database.Path) ? Database.Path : "No path chosen")</div> *@
+        @*             <label class="button edit-button"> *@
+        @*                 <InputFile OnChange="HandlePath" hidden="hidden" accept=".txt"/> *@
+        @*             </label> *@
+        @*         </div> *@
+        @*     </label> *@
+        @*     <ValidationMessage For="() => Database.Path"></ValidationMessage> *@
+        @* </div> *@
     </EditForm>
 
 
@@ -33,5 +40,3 @@
     </button>
 
 </div>
-
-<Toast @ref="Toast"/>

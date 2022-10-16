@@ -14,7 +14,7 @@
 }
 .blazored-modal {
     z-index: 1002;
-    min-width: 30em;
+    width: 30em;
     max-height: 95vh;
     border: 1px solid var(--main-color);
     border-radius: 10px;
@@ -28,6 +28,22 @@
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
+}
+.blazored-modal-close{
+    min-width: unset;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: inline-block;
+    background-image: url("../../images/close-icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    vertical-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+    padding: 0;
+}
+.blazored-modal-close > span{
+    display: none;
 }
 .blazored-modal-content {
     font-size: 24px;

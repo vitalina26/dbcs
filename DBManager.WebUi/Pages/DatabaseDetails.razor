@@ -1,8 +1,20 @@
 @page "/database/{DatabasePath}"
-@using DBManager.WebUi.Components
 <div class="card-component grid-card w-100 ">
     <div class="card-component-header">
-        <div class="card-component-header-text">@Database.Name</div>
+        <div class="card-component-header-text">@Database.Name <div class="edit-icon ml-3" @onclick="EditName"></div></div>
+        
+    </div>
+    <div class="card-component-toolbar">
+        @if (Database.Tables?.Count > 1)
+        {
+            <div @onclick="Difference">
+                Difference
+            </div>
+        }
+        <div @onclick="Create">
+            <div class="add-icon"></div>
+            Add
+        </div>
     </div>
     <div class="table-custom-body">
         <div class="data-grid-container">
@@ -11,8 +23,7 @@
                 <th>Name</th>
                 <th style="width: 3rem; ">
                 </th>
-                <th style="width: 3rem; " @onclick="Create">
-                    <div class="add-icon"></div>
+                <th style="width: 3rem; ">
                 </th>
                 </thead>
                 <tbody>
@@ -35,9 +46,3 @@
         </div>
     </div>
 </div>
-<Modal @ref="CreateModal" Title="Create table">
-    <CreateTableModal Result="(res) => { if (res) ReloadDatabase();}"/>
-</Modal>
-<Modal @ref="DeleteModal" Title="Delete database">
-    <ConfirmationModal Message="Are you sure you want to delete table?" Result="(res) => { if (res) DeleteTable();}"/>
-</Modal>

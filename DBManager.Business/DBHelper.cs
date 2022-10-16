@@ -96,6 +96,19 @@ namespace DBManager.Business
             }
         }
 
+        public bool RenameDatabase(string newName)
+        {
+            try
+            {
+                _database.Name = newName;
+                return SaveDatabase();
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void WriteDatabase()
         {
             var path = Path.Combine(AppContext.BaseDirectory, databasesFile);
@@ -136,7 +149,26 @@ namespace DBManager.Business
                 if (!string.IsNullOrEmpty(_database.Path))
                 {
                     File.Delete(_database.Path);
-                    DeleteDatabaseByPath(_database.Name);
+                    DeleteDatabaseByPath(_database.Path);
+                }
+
+                _database = null;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool DeleteDataBaseByPath(string databasePath)
+        {
+            try
+            {
+
+                if (!string.IsNullOrEmpty(databasePath))
+                {
+                    DeleteDatabaseByPath(databasePath);
+                    File.Delete(databasePath);
                 }
 
                 _database = null;
@@ -161,6 +193,7 @@ namespace DBManager.Business
                 }
                 var newTable = new Table(tableName);
                 _database.Tables.Add(newTable);
+                SaveDatabase();
                 return newTable;
             }
             catch
@@ -168,12 +201,28 @@ namespace DBManager.Business
                 return null;
             }
         }
+        
+        public bool RenameTable(string oldName, string newName)
+        {
+            try
+            {
+                var table = GetTableByName(oldName);
+                if (table == null)
+                    return false;
+                table.Name = newName;
+                return SaveDatabase();
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public bool DeleteTable(string tableName)
         {
             try
             {
                 _database.Tables.RemoveAll(i => i.Name == tableName);
-                return true;
+                return SaveDatabase();
             }
             catch
             {
@@ -187,6 +236,8 @@ namespace DBManager.Business
             foreach (var table in tables)
             {
                 var tableData = table.Replace("\r\n", "\n").Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+                if(!tableData.Any())
+                    continue;
                 var newTable = new Table(tableData[0]);
                 _database.Tables.Add(newTable);
                 ReadColumns(tableData[1], newTable);
@@ -228,11 +279,31 @@ namespace DBManager.Business
                 {
                     row.Values.Add("");
                 }
+                SaveDatabase();
                 return column;
             }
             catch
             {
                 return null;
+            }
+        }
+        
+        public bool RenameColumn(string tableName, string oldName, string newName)
+        {
+            try
+            {
+                var table = GetTableByName(tableName);
+                var column = table.Columns.FirstOrDefault(i => i.Name == oldName);
+                if (column == null)
+                    return false;
+                if (table.Columns.Select(i => i.Name).Contains(newName))
+                    return false;
+                column.Name = newName;
+                return SaveDatabase();
+            }
+            catch
+            {
+                return false;
             }
         }
         public bool DeleteColumn(string tableName, int column)
@@ -250,7 +321,7 @@ namespace DBManager.Business
                 {
                     table.Rows.Clear();
                 }
-                return true;
+                return SaveDatabase();
             }
             catch
             {
@@ -274,9 +345,10 @@ namespace DBManager.Business
         {
             foreach (var column in table.Columns)
             {
-                streamWriter.Write(column.Name + '\t' + column.Type.ToString() + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
+                streamWriter.Write(column.Name + '\t' + column.Type + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
 
             }
+            streamWriter.WriteLine();
 
         }
         #endregion
@@ -291,6 +363,7 @@ namespace DBManager.Business
                 newRow.Values.Add("");
             }
             table.Rows.Add(newRow);
+            SaveDatabase();
             return newRow;
 
         }
@@ -305,7 +378,7 @@ namespace DBManager.Business
             {
                 var table = GetTableByName(tableName);
                 table.Rows.RemoveAt(row);
-                return true;
+                return SaveDatabase();
             }
             catch
             {
@@ -344,7 +417,7 @@ namespace DBManager.Business
                 {
                     table.Rows[row].Values[column] = newValue;
 
-                    return true;
+                    return SaveDatabase();
                 }
 
                 return false;

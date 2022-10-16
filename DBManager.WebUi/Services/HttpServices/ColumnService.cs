@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DBManager.WebUi.Models;
 using Newtonsoft.Json;
 
-namespace DBManager.WebUi.Services
+namespace DBManager.WebUi.Services.HttpServices
 {
     public class ColumnService : HttpServiceBase
     {
@@ -28,6 +28,13 @@ namespace DBManager.WebUi.Services
             return await response.Content.ReadAsAsync<ColumnViewModel>();
         }
 
+        public async Task<bool> RenameColumn(string tableName, string oldName, string newName)
+        {
+            var response = await _client.PostAsync(Url($"RenameColumn/{tableName}/{oldName}/{newName}"), null!);
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsAsync<string>().GetAwaiter().GetResult());
+            return await response.Content.ReadAsAsync<bool>();
+        }
         public async Task<bool> DeleteColumn(string tableName, int columnIndex)
         {
             var response = await _client.DeleteAsync(Url($"DeleteColumn/{tableName}/{columnIndex}"));

@@ -82,6 +82,28 @@ namespace DBManager.WebApi.Controllers
                 return BadRequest("Cannot create database");
             }
         }
+
+        /// <summary>
+        /// Renames current database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("RenameDatabase/{newName}")]
+        [ProducesResponseType(200, Type = typeof(Database))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public IActionResult RenameDatabase(string newName)
+        {
+            try
+            {
+                if(_databaseService.GetCurrentDatabase() == null)
+                    return BadRequest("Cannot rename database");
+                var result = _databaseService.RenameDatabase(newName);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Cannot rename database");
+            }
+        }
         /// <summary>
         /// Saves current database.
         /// </summary>
@@ -134,7 +156,7 @@ namespace DBManager.WebApi.Controllers
         /// Deletes current database.
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("DeleteDataBaseByPath{databasePath}")]
+        [HttpDelete("DeleteDataBaseByPath/{databasePath}")]
         [ProducesResponseType(200, Type = typeof(bool))]
         [ProducesResponseType(400, Type = typeof(string))]
         public IActionResult DeleteDataBaseByPath(string databasePath)

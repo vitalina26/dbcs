@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DBManager.Business.Interfaces;
 using DBManager.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +55,36 @@ namespace DBManager.WebApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Renames column by tableName in current database.
+        /// </summary>
+        /// <param name="tableName">The name of database.</param>
+        /// <param name="oldName">Old column name.</param>
+        /// <param name="newName">New column name</param>
+        /// <returns></returns>
+        [HttpPost("RenameColumn/{tableName}/{oldName}/{newName}")]
+        [ProducesResponseType(200, Type = typeof(Database))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public IActionResult RenameColumn(string tableName, string oldName, string newName)
+        {
+            try
+            {
+                if(_databaseService.GetCurrentDatabase() == null)
+                    return BadRequest("Database doesn't exists");
+                var table = _tableService.GetTableByName(tableName);
+                if(table == null)
+                    return BadRequest("Table doesn't exists");
+                if (table.Columns.FirstOrDefault(i => i.Name == newName) != null)
+                    return BadRequest("Column with this name already exists");
+                var result = _columnService.RenameColumn(tableName, oldName, newName);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Cannot rename column");
+            }
+        }
         /// <summary>
         /// Deletes column by column index in table with specified name in current database.
         /// </summary>

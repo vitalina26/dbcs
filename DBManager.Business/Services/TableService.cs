@@ -15,6 +15,10 @@ namespace DBManager.Business.Services
         {
             return _dBHelper.CreateTable(tableName);
         }
+        public bool RenameTable(string oldName, string newName)
+        {
+            return _dBHelper.RenameTable(oldName, newName);
+        }
         public bool DeleteTable(string tableName)
         {
             return _dBHelper.DeleteTable(tableName);

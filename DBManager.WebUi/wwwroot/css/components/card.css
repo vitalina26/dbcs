@@ -15,6 +15,15 @@
     align-items: center;
     justify-content: space-between;
 }
+.card-component-toolbar{
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    align-items: center;
+}
+.card-component-toolbar > div{
+    display: flex;
+}
 .card-component .card-component-header-text {
      font-weight: 600;
  }

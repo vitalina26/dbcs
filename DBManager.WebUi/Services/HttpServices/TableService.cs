@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DBManager.WebUi.Models;
 
-namespace DBManager.WebUi.Services
+namespace DBManager.WebUi.Services.HttpServices
 {
     public class TableService : HttpServiceBase
     {
@@ -27,6 +27,14 @@ namespace DBManager.WebUi.Services
         public async Task<bool> DeleteTable(string tableName)
         {
             var response = await _client.DeleteAsync(Url($"DeleteTable/{tableName}"));
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsAsync<string>().GetAwaiter().GetResult());
+            return await response.Content.ReadAsAsync<bool>();
+        }
+        
+        public async Task<bool> RenameTable(string oldTableName, string newTableName)
+        {
+            var response = await _client.PostAsync(Url($"RenameTable/{oldTableName}/{newTableName}"), null!);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsAsync<string>().GetAwaiter().GetResult());
             return await response.Content.ReadAsAsync<bool>();

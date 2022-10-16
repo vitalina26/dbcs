@@ -53,6 +53,34 @@ namespace DBManager.WebApi.Controllers
 
 
         /// <summary>
+        /// Renames table in current database.
+        /// </summary>
+        /// <param name="oldName">Old name of table.</param>
+        /// <param name="newName">New name of table</param>
+        /// <returns></returns>
+        [HttpPost("RenameTable/{oldName}/{newName}")]
+        [ProducesResponseType(200, Type = typeof(Table))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public IActionResult RenameTable(string oldName, string newName)
+        {
+            try
+            {
+                var currentDatabase = _databaseService.GetCurrentDatabase();
+                if (currentDatabase == null)
+                    return BadRequest("Database doesn't exists");
+                if (currentDatabase.Tables.FirstOrDefault(i => i.Name == newName) != null)
+                    return BadRequest("Table with this name already exists");
+                var result = _tableService.RenameTable(oldName, newName);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Cannot create table");
+            }
+        }
+
+
+        /// <summary>
         /// Gets table with specified name in current database.
         /// </summary>
         /// <param name="name">The name of table.</param>
@@ -69,7 +97,7 @@ namespace DBManager.WebApi.Controllers
                     return BadRequest("Database doesn't exists");
                 if (!currentDatabase.Tables.Exists(i => i.Name == name))
                     return BadRequest("Table with this name doesn't exists");
-                var result = _tableService.CreateTable(name);
+                var result = _tableService.GetTableByName(name);
                 return Ok(result);
             }
             catch (Exception ex)

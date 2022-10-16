@@ -1,22 +1,25 @@
 using System;
 using System.Threading.Tasks;
+using Blazored.Modal;
+using Blazored.Modal.Services;
+using Blazored.Toast.Services;
 using DBManager.WebUi.Components;
 using DBManager.WebUi.Models;
-using DBManager.WebUi.Services;
+using DBManager.WebUi.Services.HttpServices;
 using Microsoft.AspNetCore.Components;
 
 namespace DBManager.WebUi.Pages
 {
-    public partial class DatabaseDetails :ComponentBase
+    public partial class DatabaseDetails : ComponentBase
     {
         [Parameter] public string DatabasePath { get; set; }
+        [Inject] private IModalService ModalService { get; set; }
         [Inject] public DatabaseService DatabaseService { get; set; }
+        [Inject] public IToastService ToastService { get; set; }
         [Inject] public TableService TableService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
         public DatabaseViewModel Database { get; set; } = new();
-        private Modal CreateModal { get; set; }
-        private Modal OpenModal { get; set; }
-        private Modal DeleteModal { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             await ReloadDatabase();
@@ -24,25 +27,89 @@ namespace DBManager.WebUi.Pages
 
         private async Task ReloadDatabase()
         {
-            Database = await DatabaseService.OpenDatabase(DatabasePath) ?? new DatabaseViewModel();
+            try
+            {
+                Database = await DatabaseService.OpenDatabase(DatabasePath) ?? new DatabaseViewModel();
+            }
+            catch (Exception ex)
+            {
+                NavigationManager.NavigateTo("/");
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
+                    ? "Something went wrong"
+                    : ex.Message);
+            }
         }
-        private void Create()
+
+        private async Task Difference()
         {
-            CreateModal.ShowModal();
+            var parameters = new ModalParameters();
+            parameters.Add("Tables", Database.Tables);
+            var modal = ModalService.Show<TablesDifferenceModal>("Tables difference", parameters);
+            await modal.Result;
         }
-        private void Delete(string name)
+
+        private async Task Create()
         {
-            DeleteTableName = name;
-            DeleteModal.ShowModal();
-        }
-        private async Task DeleteTable()
-        {
-            await TableService.DeleteTable(DeleteTableName);
-            DeleteTableName = String.Empty;
+            var modal = ModalService.Show<CreateTableModal>("Create table");
+            var modalResult = await modal.Result;
+            if (modalResult.Cancelled || !(bool) modalResult.Data)
+                return;
             await ReloadDatabase();
         }
 
-        public string DeleteTableName { get; set; }
+        private async Task Delete(string name)
+        {
+            try
+            {
+                var parameters = new ModalParameters();
+                parameters.Add("Message", $"Are you sure you want to delete table {name}?");
+                var modal = ModalService.Show<ConfirmationModal>("Confirmation", parameters);
+                var modalResult = await modal.Result;
+                if (modalResult.Cancelled || !(bool) modalResult.Data)
+                    return;
+                var res = await TableService.DeleteTable(name);
+                if (res)
+                {
+                    ToastService.ShowSuccess("Table successfully deleted");
+                    await ReloadDatabase();
+                }
+                else
+                    ToastService.ShowError("Something went wrong");
+            }
+            catch (Exception ex)
+            {
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
+                    ? "Something went wrong"
+                    : ex.Message);
+            }
+        }
+
+        private async Task EditName()
+        {
+            try
+            {
+                var parameters = new ModalParameters();
+                parameters.Add("Name", Database.Name);
+                var modal = ModalService.Show<EditNameModal>("Edit name", parameters);
+                var modalResult = await modal.Result;
+                if (modalResult.Cancelled || string.IsNullOrEmpty(modalResult.Data.ToString()))
+                    return;
+                var res = await DatabaseService.RenameDatabase(modalResult.Data.ToString());
+                if (res)
+                {
+                    ToastService.ShowSuccess("Database successfully renamed");
+                    Database.Name = modalResult.Data.ToString();
+                }
+                else
+                    ToastService.ShowError("Something went wrong");
+            }
+            catch (Exception ex)
+            {
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
+                    ? "Something went wrong"
+                    : ex.Message);
+            }
+        }
 
         private void Open(string tableName)
         {

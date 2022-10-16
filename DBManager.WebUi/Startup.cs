@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DBManager.WebUi.Services;
+using DBManager.WebUi.Services.HttpServices;
+using Blazored.Modal;
+using Blazored.Toast;
 
 namespace DBManager.WebUi
 {
@@ -21,6 +23,8 @@ namespace DBManager.WebUi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddBlazoredModal();
+            services.AddBlazoredToast();
             services.AddServerSideBlazor();
             services.AddHttpContextAccessor();
             services.AddTransient<DatabaseService>();

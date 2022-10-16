@@ -2,8 +2,11 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Blazored.Modal;
+using Blazored.Modal.Services;
+using Blazored.Toast.Services;
 using DBManager.WebUi.Models;
-using DBManager.WebUi.Services;
+using DBManager.WebUi.Services.HttpServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -11,14 +14,13 @@ namespace DBManager.WebUi.Components
 {
     public partial class CreateDatabaseModal : ComponentBase
     {
-        [CascadingParameter] public Modal Modal { get; set; }
-        [Parameter] public Action<bool> Result { get; set; }
+        [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
         [Inject] public DatabaseService DatabaseService { get; set; }
+        [Inject] public IToastService ToastService { get; set; }
         private DatabaseViewModel Database { get; set; } = new();
 
         private EditContext _editContext;
         private ValidationMessageStore _messageStore;
-        private Toast Toast { get; set; }
 
         protected override void OnInitialized()
         {
@@ -34,8 +36,7 @@ namespace DBManager.WebUi.Components
 
         private void Cancel()
         {
-            Result?.Invoke(false);
-            Modal.CloseModal();
+            BlazoredModal.Close(ModalResult.Cancel());
         }
 
         private async Task Create()
@@ -48,21 +49,20 @@ namespace DBManager.WebUi.Components
                 var result = await DatabaseService.CreateDatabase(Database);
                 if (result != null)
                 {
-                    Toast.ShowToast("success", "Success","Database successfully created");
-                    Result?.Invoke(true);
-                    Modal.CloseModal();
+                    ToastService.ShowSuccess("Database successfully created");
+                    BlazoredModal.Close(ModalResult.Ok(true));
                 }
                 else
-                    Toast.ShowToast("error", "Error","Something went wrong");
+                    ToastService.ShowError("Something went wrong");
             }
             catch (Exception ex)
             {
-                Toast.ShowToast("error", "Error", string.IsNullOrEmpty(ex.Message)
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
                     ? "Something went wrong"
                     : ex.Message);
             }
-
         }
+
         private void HandlePath(InputFileChangeEventArgs e)
         {
             try
@@ -70,14 +70,18 @@ namespace DBManager.WebUi.Components
                 var file = e.File;
                 if (!Regex.Match(file.ContentType, @$"^text/").Success)
                 {
-                    Toast.ShowToast("error", "Error","Incorrect format");
+                    ToastService.ShowError("Incorrect format");
                     return;
                 }
+
                 Database.Path = Path.GetFullPath(file.Name);
             }
             catch (Exception ex)
             {
-                Toast.ShowToast("error", "Error",ex.Message);
+                
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
+                    ? "Something went wrong"
+                    : ex.Message);
             }
         }
     }

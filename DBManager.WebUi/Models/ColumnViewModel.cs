@@ -4,6 +4,7 @@ namespace DBManager.WebUi.Models
 {
     public class ColumnViewModel
     {
+        public ColumnViewModel(){}
         public ColumnViewModel(string name, ColumnType type, List<string> availableValues = null)
         {
             Name = name;

@@ -1,4 +1,4 @@
-@inherits ConfirmationModalBase
+
 
 @if (!string.IsNullOrEmpty(Message))
 {
@@ -6,16 +6,12 @@
         @Message
     </div>
 }
-<div class="blazored-modal-footer">
-    <button class="button primary-button" @onclick="() => Result?.Invoke(true)">
-        Yes
-    </button>
-    <button class="button danger-button" data-dismiss="modal" @onclick="() => Result?.Invoke(false)">
+<div class="modal-footer">
+    <button class="button button-secondary" data-dismiss="modal" @onclick="() =>CloseConfirmationModal(false)">
         No
     </button>
-</div>
+    <button class="button button-primary" @onclick="() =>CloseConfirmationModal(true)">
+        Yes
+    </button>
 
-@code {
-    [Parameter] public string Message { get; set; }
-    [Parameter] public Action<bool> Result { get; set; }
-}
+</div>

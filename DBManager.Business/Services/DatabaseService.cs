@@ -29,6 +29,10 @@ namespace DBManager.Business.Services
         {
             return _dBHelper.CreateDatabase(database);
         }
+        public bool RenameDatabase(string newName)
+        {
+            return _dBHelper.RenameDatabase(newName);
+        }
         public bool SaveDatabase()
         {
             return _dBHelper.SaveDatabase();
@@ -39,7 +43,7 @@ namespace DBManager.Business.Services
         }
         public bool DeleteDatabaseByPath(string databasePath)
         {
-            return _dBHelper.DeleteDataBase();
+            return _dBHelper.DeleteDataBaseByPath(databasePath);
         }
     }
 }

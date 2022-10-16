@@ -1,9 +1,10 @@
 using System;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Blazored.Modal;
+using Blazored.Modal.Services;
+using Blazored.Toast.Services;
 using DBManager.WebUi.Models;
-using DBManager.WebUi.Services;
+using DBManager.WebUi.Services.HttpServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -11,14 +12,13 @@ namespace DBManager.WebUi.Components
 {
     public partial class CreateTableModal : ComponentBase
     {
-        [CascadingParameter] public Modal Modal { get; set; }
-        [Parameter] public Action<bool> Result { get; set; }
+        [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
         [Inject] public TableService TableService { get; set; }
+        [Inject] public IToastService ToastService { get; set; }
         private TableViewModel Table { get; set; } = new();
 
         private EditContext _editContext;
         private ValidationMessageStore _messageStore;
-        private Toast Toast { get; set; }
 
         protected override void OnInitialized()
         {
@@ -34,8 +34,7 @@ namespace DBManager.WebUi.Components
 
         private void Cancel()
         {
-            Result?.Invoke(false);
-            Modal.CloseModal();
+            BlazoredModal.Close(ModalResult.Cancel());
         }
 
         private async Task Create()
@@ -48,20 +47,18 @@ namespace DBManager.WebUi.Components
                 var result = await TableService.CreateTable(Table.Name);
                 if (result != null)
                 {
-                    Toast.ShowToast("success", "Success","Table successfully created");
-                    Result?.Invoke(true);
-                    Modal.CloseModal();
+                    ToastService.ShowSuccess("Table successfully created");
+                    BlazoredModal.Close(ModalResult.Ok(true));
                 }
                 else
-                    Toast.ShowToast("error", "Error","Something went wrong");
+                    ToastService.ShowError("Something went wrong");
             }
             catch (Exception ex)
             {
-                Toast.ShowToast("error", "Error", string.IsNullOrEmpty(ex.Message)
+                ToastService.ShowError(string.IsNullOrEmpty(ex.Message)
                     ? "Something went wrong"
                     : ex.Message);
             }
-
         }
     }
 }

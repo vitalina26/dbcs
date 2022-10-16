@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DBManager.WebUi.Models;
 using Newtonsoft.Json;
 
-namespace DBManager.WebUi.Services
+namespace DBManager.WebUi.Services.HttpServices
 {
     public abstract class HttpServiceBase
     {

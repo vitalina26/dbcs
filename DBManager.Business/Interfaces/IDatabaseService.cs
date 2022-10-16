@@ -10,6 +10,7 @@ namespace DBManager.Business.Interfaces
         Database GetCurrentDatabase();
         Database OpenDatabase(string path);
         Database CreateDatabase(Database database);
+        bool RenameDatabase(string newName);
         bool SaveDatabase();
         bool DeleteDataBase();
         bool DeleteDatabaseByPath(string databasePath);

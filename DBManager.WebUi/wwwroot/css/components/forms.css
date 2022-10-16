@@ -370,12 +370,20 @@ and (-webkit-min-device-pixel-ratio: 2) {
     border-radius: 5px;
     background-color: rgba(41, 41, 97, 0.6);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 50px;
     width: 100%;
     margin-left: 5px;
     margin-bottom: 5px;
+    padding: 0.25rem;
+}
+.upload-version-data > div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100%;
+    white-space: nowrap;
+    width: calc(100% - 46px);
 }
 .upload-version-data .edit-button {
     position: absolute;

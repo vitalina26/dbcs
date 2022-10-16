@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using DBManager.WebUi.Models;
 using Newtonsoft.Json;
 
-namespace DBManager.WebUi.Services
+namespace DBManager.WebUi.Services.HttpServices
 {
     public class DatabaseService : HttpServiceBase
     {
@@ -30,12 +30,20 @@ namespace DBManager.WebUi.Services
 
         public async Task<DatabaseViewModel> OpenDatabase(string path)
         {
-            var response = await _client.PostAsync(Url($"OpenDatabase/{path}"), null!);
+            var response = await _client.PostAsync(Url($"OpenDatabase/{Uri.EscapeUriString(path)}"), null!);
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Content.ReadAsAsync<string>().GetAwaiter().GetResult());
             return await response.Content.ReadAsAsync<DatabaseViewModel>();
         }
 
+        
+        public async Task<bool> RenameDatabase(string newName)
+        {
+            var response = await _client.PostAsync(Url($"RenameDatabase/{newName}"), null!);
+            if (!response.IsSuccessStatusCode)
+                throw new Exception(response.Content.ReadAsAsync<string>().GetAwaiter().GetResult());
+            return await response.Content.ReadAsAsync<bool>();
+        }
         public async Task<DatabaseViewModel> CreateDatabase(DatabaseViewModel database)
         {
             var response = await _client.PostAsync(Url($"CreateDatabase"),

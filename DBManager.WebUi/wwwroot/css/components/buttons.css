@@ -1,4 +1,4 @@
-.button{
+button, .button{
     cursor: pointer;
     outline: none;
     text-decoration: none;
@@ -17,11 +17,11 @@
     min-width: 12rem;
 }
 
-.button:hover{
+.button:hover, button:hover{
     opacity: 0.8;
     text-decoration: none;
 }
-.button:focus{
+.button:focus, button:focus{
     outline: none!important;
 }
 
