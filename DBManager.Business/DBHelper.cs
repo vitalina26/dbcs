@@ -12,11 +12,20 @@ namespace DBManager.Business
     public class DBHelper
     {
         private Database _database;
-        public Database Database { get => _database; set => _database = value; }
+
+        public Database Database
+        {
+            get => _database;
+            set => _database = value;
+        }
+
         private static DBHelper _instance;
+
         #region Separators
+
         private const char _tablesSeparator = '$';
         private const char _columnsSeparator = '%';
+
         #endregion
 
         public static DBHelper Instance
@@ -31,9 +40,15 @@ namespace DBManager.Business
                 return _instance;
             }
         }
+
         private const string databasesFile = "databases_info.txt";
-        private DBHelper() { }
+
+        private DBHelper()
+        {
+        }
+
         #region Database
+
         public List<Database> GetAllDatabases()
         {
             try
@@ -44,15 +59,18 @@ namespace DBManager.Business
                     File.Create(path);
                     return null;
                 }
+
                 var streamReader = new StreamReader(path);
                 string file = streamReader.ReadToEnd();
-                var databasesInfo = file.Replace("\r\n", "\n").Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+                var databasesInfo = file.Replace("\r\n", "\n").Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                    .ToList();
                 var dataBases = new List<Database>();
                 foreach (var item in databasesInfo)
                 {
                     var info = item.Split('\t', StringSplitOptions.RemoveEmptyEntries);
                     dataBases.Add(new Database(info[0], info[1]));
                 }
+
                 streamReader.Close();
                 return dataBases;
             }
@@ -61,6 +79,7 @@ namespace DBManager.Business
                 return null;
             }
         }
+
         public Database OpenDatabase(string path)
         {
             try
@@ -80,12 +99,13 @@ namespace DBManager.Business
                 return null;
             }
         }
+
         public Database CreateDatabase(Database database)
         {
             try
             {
                 _database = new Database(database);
-                var databases = GetAllDatabases();
+                var databases = GetAllDatabases() ?? new List<Database>();
                 if (!databases.Exists(i => i.Path == _database.Path))
                     WriteDatabase();
                 return _database;
@@ -121,9 +141,10 @@ namespace DBManager.Business
         private void DeleteDatabaseByPath(string databasePath)
         {
             var path = Path.Combine(AppContext.BaseDirectory, databasesFile);
-            File.WriteAllLines(path, 
+            File.WriteAllLines(path,
                 File.ReadLines(path).Where(i => !i.Contains(databasePath)).ToList());
         }
+
         public bool SaveDatabase()
         {
             try
@@ -141,11 +162,11 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public bool DeleteDataBase()
         {
             try
             {
-
                 if (!string.IsNullOrEmpty(_database.Path))
                 {
                     File.Delete(_database.Path);
@@ -160,11 +181,11 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public bool DeleteDataBaseByPath(string databasePath)
         {
             try
             {
-
                 if (!string.IsNullOrEmpty(databasePath))
                 {
                     DeleteDatabaseByPath(databasePath);
@@ -179,18 +200,20 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         #endregion
 
         #region Table
+
         public Table CreateTable(string tableName)
         {
             try
             {
-
                 if (_database.Tables.Select(i => i.Name).Contains(tableName))
                 {
                     return null;
                 }
+
                 var newTable = new Table(tableName);
                 _database.Tables.Add(newTable);
                 SaveDatabase();
@@ -201,7 +224,7 @@ namespace DBManager.Business
                 return null;
             }
         }
-        
+
         public bool RenameTable(string oldName, string newName)
         {
             try
@@ -217,6 +240,7 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public bool DeleteTable(string tableName)
         {
             try
@@ -229,23 +253,31 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public Table GetTableByName(string tableName) => _database?.Tables?.FirstOrDefault(i => i.Name == tableName);
         public List<Table> GetAllTables() => _database?.Tables;
+
         private void ReadTables(string[] tables)
         {
             foreach (var table in tables)
             {
                 var tableData = table.Replace("\r\n", "\n").Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
-                if(!tableData.Any())
+                if (!tableData.Any())
                     continue;
                 var newTable = new Table(tableData[0]);
                 _database.Tables.Add(newTable);
-                ReadColumns(tableData[1], newTable);
+                if (tableData.Count > 1)
+                {
+                    ReadColumns(tableData[1], newTable);
+                }
+
+                if (tableData.Count <= 2) continue;
                 tableData.RemoveAt(0);
                 tableData.RemoveAt(0);
                 ReadRows(tableData, newTable);
             }
         }
+
         private void WriteTables(StreamWriter streamWriter)
         {
             foreach (var table in _database.Tables)
@@ -265,6 +297,7 @@ namespace DBManager.Business
         {
             return GetTableByName(tableName)?.Columns.ElementAtOrDefault(columnIndex);
         }
+
         public Column CreateColumn(string tableName, Column column)
         {
             try
@@ -274,11 +307,13 @@ namespace DBManager.Business
                 {
                     return null;
                 }
+
                 table.Columns.Add(column);
                 foreach (var row in table.Rows)
                 {
                     row.Values.Add("");
                 }
+
                 SaveDatabase();
                 return column;
             }
@@ -287,7 +322,7 @@ namespace DBManager.Business
                 return null;
             }
         }
-        
+
         public bool RenameColumn(string tableName, string oldName, string newName)
         {
             try
@@ -306,6 +341,7 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public bool DeleteColumn(string tableName, int column)
         {
             try
@@ -321,6 +357,7 @@ namespace DBManager.Business
                 {
                     table.Rows.Clear();
                 }
+
                 return SaveDatabase();
             }
             catch
@@ -328,6 +365,7 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         private void ReadColumns(string data, Table table)
         {
             var columns = data.Split(_columnsSeparator, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -341,19 +379,22 @@ namespace DBManager.Business
                 table.Columns.Add(new Column(columnData[0], columnType, availableValues));
             }
         }
+
         private void WriteColumns(StreamWriter streamWriter, Table table)
         {
             foreach (var column in table.Columns)
             {
-                streamWriter.Write(column.Name + '\t' + column.Type + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
-
+                streamWriter.Write(column.Name + '\t' + column.Type + '\t' + string.Join(',', column.AvailableValues) +
+                                   _columnsSeparator);
             }
-            streamWriter.WriteLine();
 
+            streamWriter.WriteLine();
         }
+
         #endregion
 
         #region Rows
+
         public Row CreateRow(string tableName)
         {
             var table = GetTableByName(tableName);
@@ -362,16 +403,17 @@ namespace DBManager.Business
             {
                 newRow.Values.Add("");
             }
+
             table.Rows.Add(newRow);
             SaveDatabase();
             return newRow;
-
         }
 
         public Row GetRowByIndex(string tableName, int rowIndex)
         {
             return GetTableByName(tableName)?.Rows.ElementAtOrDefault(rowIndex);
         }
+
         public bool DeleteRow(string tableName, int row)
         {
             try
@@ -383,18 +425,16 @@ namespace DBManager.Business
             catch
             {
                 return false;
-
             }
-
         }
+
         private void ReadRows(List<string> rows, Table table)
         {
-
             foreach (var row in rows)
             {
                 var rowData = row.Split('\t', StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                table.Rows.Add(new Row() { Values = rowData });
+                table.Rows.Add(new Row() {Values = rowData});
             }
         }
 
@@ -403,11 +443,11 @@ namespace DBManager.Business
             foreach (var row in table.Rows)
             {
                 streamWriter.WriteLine(string.Join('\t', row.Values));
-
             }
-
         }
+
         #endregion
+
         public bool EditCell(string tableName, int column, int row, string newValue)
         {
             try
@@ -427,6 +467,7 @@ namespace DBManager.Business
                 return false;
             }
         }
+
         public Table Difference(string firstTableName, string secondTableName)
         {
             try
@@ -434,10 +475,13 @@ namespace DBManager.Business
                 var firstTable = GetTableByName(firstTableName);
                 var secondTable = GetTableByName(secondTableName);
                 var result = new Table("difference");
-                foreach (var column in firstTable.Columns.Where(column => secondTable.Columns.FirstOrDefault(i => i.Name == column.Name && i.Type == column.Type) != null))
+                foreach (var column in firstTable.Columns.Where(column =>
+                             secondTable.Columns.FirstOrDefault(i => i.Name == column.Name && i.Type == column.Type) !=
+                             null))
                 {
                     result.Columns.Add(column);
                 }
+
                 if (!result.Columns.Any())
                     return null;
 
@@ -447,13 +491,17 @@ namespace DBManager.Business
                     var newRow = new Row();
                     for (var i = 0; i < row.Values.Count; i++)
                     {
-                        if (result.Columns.FirstOrDefault(c => c.Name == secondTable.Columns.ElementAtOrDefault(i)?.Name && c.Type == secondTable.Columns.ElementAtOrDefault(i)?.Type) != null)
+                        if (result.Columns.FirstOrDefault(c =>
+                                c.Name == secondTable.Columns.ElementAtOrDefault(i)?.Name &&
+                                c.Type == secondTable.Columns.ElementAtOrDefault(i)?.Type) != null)
                         {
                             newRow.Values.Add(row.Values.ElementAtOrDefault(i));
                         }
                     }
+
                     tempRows.Add(newRow);
                 }
+
                 foreach (var row in firstTable.Rows)
                 {
                     var newRow = new Row();
@@ -464,9 +512,11 @@ namespace DBManager.Business
                             newRow.Values.Add(row.Values.ElementAtOrDefault(i));
                         }
                     }
-                    if (!tempRows.Any(r => r.Values.SequenceEqual(row.Values)))
+
+                    if (!tempRows.Any(r => r.Values.SequenceEqual(newRow.Values)))
                         result.Rows.Add(newRow);
                 }
+
                 return result;
             }
             catch
