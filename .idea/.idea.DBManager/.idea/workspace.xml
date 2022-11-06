@@ -39,7 +39,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ed9b37a02174158b69287ee541e01418f5d90/40/String.Manipulation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3935aa86bca845daa57c943e83e6f175dd90/2/EditContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DBManager.WebUi/Components/OpenDatabaseModal.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DBManager.WebUi/Components/OpenDatabaseModal.razor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DBManager.WebUi/Components/CreateDatabaseModal.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DBManager.WebUi/Components/CreateDatabaseModal.razor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f256459b676e41af98175765db2d77c02f790/31/ValidationMessage.cs" root0="SKIP_HIGHLIGHTING" />
@@ -48,6 +47,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ed9b37a02174158b69287ee541e01418f5d90/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2FXZh5BGpAs4h6gCpEh3dMSyZ5o" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -62,7 +62,6 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="RiderNuGetOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -236,7 +235,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
@@ -249,27 +247,13 @@
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DBManager.WebUi/Components/OpenDatabaseModal.razor.cs</url>
           <line>46</line>
-          <properties documentPath="C:\Users\irari\OneDrive\Робочий стіл\4 курс\ІТ\DBManager\DBManager.WebUi\Components\OpenDatabaseModal.razor.cs" initialLine="46" containingFunctionPresentation="method 'Create'">
-            <startOffsets>
-              <option value="1570" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1622" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\irari\OneDrive\Робочий стіл\4 курс\ІТ\DBManager\DBManager.WebUi\Components\OpenDatabaseModal.razor.cs" initialLine="46" containingFunctionPresentation="method 'Create'" />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/DBManagerWebApi/Controllers/DatabaseController.cs</url>
           <line>50</line>
-          <properties documentPath="C:\Users\irari\OneDrive\Робочий стіл\4 курс\ІТ\DBManager\DBManagerWebApi\Controllers\DatabaseController.cs" initialLine="50" containingFunctionPresentation="method 'OpenDatabase'">
-            <startOffsets>
-              <option value="1726" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1727" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\irari\OneDrive\Робочий стіл\4 курс\ІТ\DBManager\DBManagerWebApi\Controllers\DatabaseController.cs" initialLine="50" containingFunctionPresentation="method 'OpenDatabase'" />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
