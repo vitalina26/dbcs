@@ -1,0 +1,48 @@
+﻿@page "/"
+
+<div class="card-component grid-card w-100 ">
+    <div class="card-component-header">
+        <div class="card-component-header-text">Databases</div>
+    </div>
+
+    <div class="card-component-toolbar">
+        <div @onclick="UploadDatabase">
+            Upload
+        </div>
+        <div @onclick="Create">
+            <div class="add-icon"></div>
+            Add
+        </div>
+    </div>
+    <div class="table-custom-body">
+        <div class="data-grid-container">
+            <table class="data-grid ">
+                <thead>
+                <th>Name</th>
+                <th>Path</th>
+                <th style="width: 3rem; " @onclick="StateHasChanged"></th>
+                <th style="width: 3rem; " @onclick="StateHasChanged"></th>
+                </thead>
+                <tbody>
+                    @foreach (var database in AllDatabases)
+                    {
+                        <tr>
+                            <td class="data-grid-cell">
+                                @database.Name
+                            </td>
+                            <td class="data-grid-cell">
+                                @database.Path
+                            </td>
+                            <td class="data-grid-cell" style="width: 3rem;" @onclick="() => OpenDatabase(database.Path)">
+                                <div class="edit-icon"></div>
+                            </td>
+                            <td class="data-grid-cell" style="width: 3rem;" @onclick="@(() => Delete(database))">
+                                <div class="delete-icon"></div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+.card-component.grid-card {
+    display: flex;
+    flex-direction: column;
+}
+.card-component.dashboard-card .card-component-header, .card-component.grid-card .card-component-header {
+    padding-top: 0.5rem;
+    display: flex;
+    align-items: center;    
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.card-component-header-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-component-toolbar{
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    align-items: center;
+}
+.card-component-toolbar > div{
+    display: flex;
+}
+.card-component .card-component-header-text {
+     font-weight: 600;
+ }
+.card-component.grid-card .table-custom-body {
+    height: calc(100% - 72px);
+}

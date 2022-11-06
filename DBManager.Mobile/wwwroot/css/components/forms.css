@@ -1,0 +1,406 @@
+.base-input-container{
+    height: 72px;
+    width: calc(50% - 15px);
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.base-input-container.long{
+    width: 100%;
+    margin: 0;
+}
+.base-input-container.small {
+    width: 350px;
+}
+.base-input {
+    --pure-material-safari-helper1: var(--main-color);
+    position: relative;
+    display: inline-block;
+    padding-top: 6px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: auto;
+}
+
+/* Input, Textarea */
+.base-input > input,
+.base-input > select,
+.base-input > textarea,
+.store-detail__main-block .base-input > div{
+    box-sizing: border-box;
+    margin: 0;
+    border: solid 1px #A1A1A1;
+    border-top-color: transparent;
+    border-radius: 5px;
+    padding: 8px 13px 8px;
+    width: 100%;
+    height: inherit;
+    color: rgba(var(--main-color), 0.87);
+    background-color: transparent;
+    box-shadow: none; /* Firefox */
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    outline: none;
+    caret-color: rgb(var(--main-color));
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* Span */
+.base-input > input + span,
+.base-input > select + span,
+.base-input > textarea + span,
+.store-detail__main-block .base-input > div + span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    border-color: #A1A1A1;
+    width: 100%;
+    max-height: 100%;
+    color: rgba(var(--main-color), 0.6);
+    font-size: 75%;
+    line-height: 15px;
+    cursor: text;
+    transition: color 0.2s, font-size 0.2s, line-height 0.2s;
+}
+
+/* Corners */
+.base-input > input + span::before,
+.base-input > input + span::after,
+.base-input > select + span::before,
+.base-input > select + span::after,
+.base-input > textarea + span::before,
+.base-input > textarea + span::after,
+.store-detail__main-block .base-input > div + span::before,
+.store-detail__main-block .base-input > div + span::after{
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    margin-top: 6px;
+    border-top: solid 1px;
+    border-top-color: #A1A1A1;
+    min-width: 10px;
+    height: 14px;
+    pointer-events: none;
+    box-shadow: inset 0 1px transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.base-input > input + span::before,
+.base-input > select + span::before,
+.base-input > textarea + span::before,
+.store-detail__main-block .base-input > div + span::before {
+    margin-right: 4px;
+    border-left: solid 1px transparent;
+    border-radius: 5px 0;
+}
+
+.base-input > input + span::after,
+.base-input > select + span::after,
+.base-input > textarea + span::after,
+.store-detail__main-block .base-input > div + span::after {
+    flex-grow: 1;
+    margin-left: 4px;
+    border-right: solid 1px transparent;
+    border-radius: 0 5px;
+}
+.base-input select{
+    height: 42px;
+}
+/* Hover */
+.base-input:hover > input,
+.base-input:hover > select,
+.base-input:hover > textarea,
+.store-detail__main-block .base-input:hover > div {
+    border-color: #A1A1A1;
+    border-top-color: transparent;
+}
+
+.base-input:hover > input + span::before,
+.base-input:hover > textarea + span::before,
+.base-input:hover > input + span::after,
+.base-input:hover > textarea + span::after,
+.store-detail__main-block .base-input:hover > div + span::after {
+    border-top-color: #A1A1A1;
+}
+/*.store-detail__main-block .base-input:hover > div + span::before,*/
+/*.store-detail__main-block .base-input:hover > div + span::after{*/
+/*    border-top-color: var(--component-border-hover-color);*/
+/*}*/
+.base-input:hover > input:not(:focus):placeholder-shown,
+.base-input:hover > textarea:not(:focus):placeholder-shown,
+.store-detail__main-block .base-input:hover > div:not(:focus):placeholder-shown {
+    border-color: #A1A1A1;
+}
+
+/* Placeholder-shown */
+.base-input > input:not(:focus):placeholder-shown,
+.base-input > textarea:not(:focus):placeholder-shown,
+.store-detail__main-block .base-input > div:not(:focus):placeholder-shown {
+    border-top-color: #A1A1A1;
+}
+
+.base-input > input:not(:focus):placeholder-shown + span,
+.base-input > textarea:not(:focus):placeholder-shown + span,
+.store-detail__main-block .base-input > div:not(:focus):placeholder-shown + span {
+    font-size: inherit;
+    line-height: 52px;
+}
+
+.base-input > input:not(:focus):placeholder-shown + span::before,
+.base-input > textarea:not(:focus):placeholder-shown + span::before,
+.store-detail__main-block .base-input > div:not(:focus):placeholder-shown + span::before,
+.base-input > input:not(:focus):placeholder-shown + span::after,
+.base-input > textarea:not(:focus):placeholder-shown + span::after,
+.store-detail__main-block .base-input > textarea:not(:focus):placeholder-shown + span::after {
+    border-top-color: transparent;
+}
+
+/* Focus */
+.base-input > input:focus,
+.base-input > select:focus,
+.base-input > textarea:focus,
+.store-detail__main-block .base-input > div:focus {
+    border-color: var(--main-color);
+    border-top-color: transparent;
+    outline: none;
+}
+
+.base-input > input:focus + span,
+.base-input > select:focus + span,
+.base-input > textarea:focus + span,
+.store-detail__main-block .base-input > div:focus + span {
+    color: var(--main-color)
+}
+
+.base-input > select:focus + span::before,
+.base-input > select:focus + span::after,
+.base-input > input:focus + span::before,
+.base-input > input:focus + span::after,
+.base-input > textarea:focus + span::before,
+.base-input > textarea:focus + span::after,
+.store-detail__main-block .base-input > div:focus + span::before,
+.store-detail__main-block .base-input > div:focus + span::after {
+    border-top-color: var(--pure-material-safari-helper1) !important;
+}
+
+/* Disabled */
+.base-input > input:disabled,
+.base-input > input:disabled + span,
+.base-input > textarea:disabled,
+.base-input > textarea:disabled + span {
+    border-color: #A1A1A1 !important;
+    border-top-color: transparent !important;
+    color: #A1A1A1;
+    pointer-events: none;
+}
+.base-input > input:disabled,
+.base-input > textarea:disabled{
+    background-color: #F2F2F2 !important;
+}
+.base-input > input:disabled + span::before,
+.base-input > input:disabled + span::after,
+.base-input > textarea:disabled + span::before,
+.base-input > textarea:disabled + span::after {
+    border-top-color: #A1A1A1 !important;
+}
+
+.base-input > input:disabled:placeholder-shown,
+.base-input > input:disabled:placeholder-shown + span,
+.base-input > textarea:disabled:placeholder-shown,
+.base-input > textarea:disabled:placeholder-shown + span {
+    border-top-color: #A1A1A1 !important;
+}
+
+.base-input > input:disabled:placeholder-shown + span::before,
+.base-input > input:disabled:placeholder-shown + span::after,
+.base-input > textarea:disabled:placeholder-shown + span::before,
+.base-input > textarea:disabled:placeholder-shown + span::after {
+    border-top-color: transparent !important;
+}
+
+@media only screen
+and (min-device-width: 768px)
+and (max-device-width: 1024px)
+and (-webkit-min-device-pixel-ratio: 2) {
+    .base-input > input:disabled+span::after,
+    .base-input > input:disabled+span::before {
+        border-color: #dbdbdb !important;
+    }
+}
+
+/* error */
+
+.base-input .validation-message {
+    font-size: 13px;
+    color: #EB5757;
+    line-height: 20px;
+    margin-left: 5px;
+}
+.validation-message {
+    font-size: 13px;
+    color: #EB5757;
+    line-height: 12px;
+}
+.base-input > input.invalid{
+    border-color: #EB5757!important;
+}
+.base-input > input.invalid:focus
+{
+    border-top-color: transparent!important;
+}
+
+.base-input > input.invalid + span{
+    color: #EB5757!important;
+}
+.base-input > input.invalid + span::before,
+.base-input > input.invalid + span::after,
+.base-input > textarea.invalid + span::before,
+.base-input > textarea.invalid + span::after,
+.base-input > input.invalid:not(:focus):placeholder-shown,
+.base-input > textarea.invalid:not(:focus):placeholder-shown {
+    border-top-color: #EB5757!important;
+}
+
+
+.base-input > input.invalid:not(:focus),
+.base-input > textarea.invalid:not(:focus) {
+    border-top-color: transparent!important;
+}
+/* Faster transition in Safari for less noticable fractional font-size issue */
+@media not all and (min-resolution:.001dpcm) {
+    @supports (-webkit-appearance:none) {
+        .base-input > input,
+        .base-input > input + span,
+        .base-input > textarea,
+        .base-input > textarea + span,
+        .base-input > input + span::before,
+        .base-input > input + span::after,
+        .base-input > textarea + span::before,
+        .base-input > textarea + span::after {
+            transition-duration: 0.1s;
+        }
+    }
+}
+
+[class*=icheck-]>input:first-child+input[type=hidden]+label::before,
+[class*=icheck-]>input:first-child+label::before{
+    border-radius: 5px!important;
+}
+.icheck-primary>input:first-child:checked+input[type=hidden]+label::before,
+.icheck-primary>input:first-child:checked+label::before{
+
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color)!important;
+}
+.icheck-primary>input:first-child:not(:checked):not(:disabled):hover+input[type=hidden]+label::before,
+.icheck-primary>input:first-child:not(:checked):not(:disabled):hover+label::before{
+    border-color: var(--main-color)!important;
+}
+
+.base-input-no-label input{
+    box-sizing: border-box;
+    margin: 0;
+    border: solid 1px #A1A1A1;
+    border-radius: 5px;
+    padding: 8px 13px 8px;
+    width: 100%;
+    height: inherit;
+    color: rgba(var(--main-color));
+    background-color: transparent;
+    box-shadow: none; /* Firefox */
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    outline: none;
+    caret-color: rgb(var(--main-color));
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.base-input-no-label input:focus{
+    border-color: var(--main-color)!important;
+}
+
+.input-company-name{
+    height: 90px;
+}
+.user-small-logo-preview{
+    display: inline-block;
+}
+.user-small-logo-preview img{
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    margin: 0;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.change-image{
+    margin-right: 5px;
+    margin-bottom: 6px;
+}
+@media (max-width: 1100px) {
+    .base-input > input:disabled,
+    .base-input > input:disabled + span,
+    .base-input > textarea:disabled,
+    .base-input > textarea:disabled + span {
+        font-size: 16px;
+    }
+    .base-input > input + span,
+    .base-input > select + span,
+    .base-input > textarea + span,
+    .store-detail__main-block .base-input > div + span{
+        line-height: 12px;
+        font-size: 16px;
+    }
+    .edit-parcel-block .base-input-container.parcel-locker.enable .base-input::after{
+
+        height: 45px;
+    }
+}
+
+.upload-version-data {
+    position: relative;
+    border-radius: 5px;
+    background-color: rgba(41, 41, 97, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 0.25rem;
+}
+.upload-version-data > div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100%;
+    white-space: nowrap;
+    width: calc(100% - 46px);
+}
+.upload-version-data .edit-button {
+    position: absolute;
+    right: 0;
+    bottom: -7px;
+}
+
+.button.edit-button{
+    padding: 1rem;
+    width: 48px;
+    height:  48px;
+    border-radius: 50%;
+    background-image: url("../../images/edit.svg");
+    background-repeat: no-repeat;
+    background-position: 12px;
+    min-width: unset;
+}
+.button.edit-button:hover{
+    opacity: 0.9;
+}

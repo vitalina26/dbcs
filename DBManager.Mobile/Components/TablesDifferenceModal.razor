@@ -1,0 +1,74 @@
+@using DBManager.Mobile.Components.DropDownComponent
+<div class="database-create" style="min-height: 50vh">
+    <div class="base-input-container">
+        <label class="base-input base-input-custom-select">
+            @if (Tables != null && Tables.Any())
+            {
+                <Dropdown TItem="string" OnSelected="@((val) => FirstTableName = val)" IgnoreMinWidth="true">
+                    <InitialTip>First table</InitialTip>
+                    <SelectedOneItem>@Tables.FirstOrDefault(i => i.Name == FirstTableName)?.Name</SelectedOneItem>
+                    <ChildContent >
+                        @foreach (var item in Tables)
+                        {
+                            <DropdownItem Item="@item.Name">@item.Name</DropdownItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            }
+        </label>
+    </div>
+    <div class="base-input-container">
+        <label class="base-input base-input-custom-select">
+            @if (Tables != null && Tables.Any())
+            {
+                <Dropdown TItem="string" OnSelected="@((val) => SecondTableName = val)" IgnoreMinWidth="true">
+                    <InitialTip>Second table</InitialTip>
+                    <SelectedOneItem>@Tables.FirstOrDefault(i => i.Name == SecondTableName)?.Name</SelectedOneItem>
+                    <ChildContent >
+                        @foreach (var item in Tables)
+                        {
+                            <DropdownItem Item="@item.Name">@item.Name</DropdownItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            }
+        </label>
+    </div>
+    @if (Result != null)
+    {
+        <div class="table-custom-body">
+            <div class="data-grid-container">
+                <table class="data-grid ">
+                    <thead>
+                    @foreach (var col in Result.Columns)
+                    {
+                        <th>@col.Name</th>
+                    }
+                    </thead>
+                    <tbody>
+                    @foreach (var row in Result.Rows)
+                    {
+                        <tr>
+                            @foreach (var val in row.Values)
+                            {
+                                <td class="data-grid-cell">
+                                    @val
+                                </td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal-footer">
+    <button class="button button-secondary" data-dismiss="modal" @onclick="Cancel">
+        Cancel
+    </button>
+    <button class="button button-primary" @onclick="Difference">
+        Difference
+    </button>
+
+</div>

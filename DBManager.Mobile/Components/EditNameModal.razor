@@ -1,0 +1,24 @@
+<div class="database-create">
+
+    <div class="base-input-container long">
+        <label class="base-input">
+            <input type="text" placeholder=" " name="name" @bind="Name"/>
+            <span>Name</span>
+            @if (!string.IsNullOrEmpty(Error))
+            {
+                <div class="validation-message">@Error</div>
+            }
+        </label>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button class="button button-secondary" data-dismiss="modal" @onclick="Cancel">
+        Cancel
+    </button>
+    <button class="button button-primary" @onclick="Save">
+        Save
+    </button>
+
+</div>
