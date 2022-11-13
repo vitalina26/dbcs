@@ -4,8 +4,7 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Blazored.Toast.Services;
 using DBManager.Mobile.Components;
-using DBManager.Mobile.Models;
-using DBManager.Mobile.Services.HttpServices;
+using DBManager.Mobile.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace DBManager.Mobile.Pages
@@ -19,7 +18,7 @@ namespace DBManager.Mobile.Pages
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public RowService RowService { get; set; }
         [Inject] public ColumnService ColumnService { get; set; }
-        public TableViewModel Table { get; set; } = new();
+        public Table Table { get; set; } = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,7 +29,7 @@ namespace DBManager.Mobile.Pages
         {
             try
             {
-                Table = await TableService.GetTableByName(TableName) ?? new TableViewModel();
+                Table = await TableService.GetTableByName(TableName) ?? new Table();
             }
             catch (Exception ex)
             {
@@ -68,7 +67,7 @@ namespace DBManager.Mobile.Pages
             }
         }
 
-        private async Task EditColumnName(ColumnViewModel column)
+        private async Task EditColumnName(Column column)
         {
             try
             {

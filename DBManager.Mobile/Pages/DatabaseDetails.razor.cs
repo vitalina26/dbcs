@@ -4,8 +4,7 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using Blazored.Toast.Services;
 using DBManager.Mobile.Components;
-using DBManager.Mobile.Models;
-using DBManager.Mobile.Services.HttpServices;
+using DBManager.Mobile.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace DBManager.Mobile.Pages
@@ -18,7 +17,7 @@ namespace DBManager.Mobile.Pages
         [Inject] public IToastService ToastService { get; set; }
         [Inject] public TableService TableService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
-        public DatabaseViewModel Database { get; set; } = new();
+        public Database Database { get; set; } = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,7 +28,7 @@ namespace DBManager.Mobile.Pages
         {
             try
             {
-                Database = await DatabaseService.OpenDatabase(DatabasePath) ?? new DatabaseViewModel();
+                Database = await DatabaseService.OpenDatabase(DatabasePath) ?? new Database();
             }
             catch (Exception ex)
             {
@@ -43,7 +42,7 @@ namespace DBManager.Mobile.Pages
         private async Task Difference()
         {
             var parameters = new ModalParameters();
-            parameters.Add("Tables", Database.Tables);
+            parameters.Add("Tables", Database.Tables.ToList());
             var modal = ModalService.Show<TablesDifferenceModal>("Tables difference", parameters);
             await modal.Result;
         }

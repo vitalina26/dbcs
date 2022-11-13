@@ -17,9 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.Mobile", "DBManager.Mobile\DBManager.Mobile.csproj", "{15CD26C7-D429-427B-8E28-40032A631853}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proto", "Proto", "{E180BBF7-599E-4CF6-8418-3DE89522DB9B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager.GrpcService", "DBManager.GrpcService\DBManager.GrpcService.csproj", "{5BD9DDAB-04A8-476C-8822-3402D957EA50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBManager.GrpcService", "DBManager.GrpcService\DBManager.GrpcService.csproj", "{5BD9DDAB-04A8-476C-8822-3402D957EA50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
