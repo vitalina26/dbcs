@@ -11,7 +11,7 @@ namespace DBManager.Mobile.Services.HttpServices
     {
         protected readonly HttpClient _client;
         protected abstract string _apiControllerName { get; set; }
-        private string webApiUrl = "http://localhost:5110";
+        private string webApiUrl = "http://192.168.0.107:5110";
         /// <summary>
         /// Constructor.
         /// </summary>
