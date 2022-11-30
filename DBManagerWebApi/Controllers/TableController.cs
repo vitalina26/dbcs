@@ -138,7 +138,7 @@ namespace DBManager.WebApi.Controllers
         /// <param name="firstTableName">The name of the first table.</param>
         /// <param name="secondTableName">The name of the second table</param>
         /// <returns></returns>
-        [HttpPost("Difference/{firstTableName}/{secondTableName}")]
+        [HttpPost("Union/{firstTableName}/{secondTableName}")]
         [ProducesResponseType(200, Type = typeof(Table))]
         [ProducesResponseType(400, Type = typeof(string))]
         public IActionResult Difference(string firstTableName, string secondTableName)

@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using DBManager.Entities.Enums;
+using System.IO;
 
 namespace DBManager.Entities.Models
 {
     public class Column
     {
         public Column(){}
-        public Column(string name, ColumnType type, List<string> availableValues = null)
+        public Column(string name, ColumnType type)
         {
             Name = name;
             Type = type;
-            AvailableValues = availableValues ?? new List<string>();
+           
         }
         public string Name { get; set; }
-        public List<string> AvailableValues { get; set; }
         public ColumnType Type { get; set; }
-        private const string EmailPattern = @"^[\d\w\._\-\+]+@([\d\w\._\-]+\.)+[\w]+$";
+    
+
+        static public bool ValidationofStringInvl(string v)
+        {
+            string[] t = v.Replace(" ", "").Split(',');
+            if (t.Length == 2 && String.Compare(t[1], t[2]) > 0)
+                return true;
+            else
+                return false;
+        }
+
         public bool IsValid(string value)
         {
             return Type switch
@@ -26,9 +36,8 @@ namespace DBManager.Entities.Models
                 ColumnType.Real => Double.TryParse(value, out _),
                 ColumnType.Char => Char.TryParse(value, out _),
                 ColumnType.String => true,
-                ColumnType.Enum => (AvailableValues?.Contains(value) ?? false),
-                ColumnType.Email => !string.IsNullOrEmpty(value) &&
-                                    Regex.IsMatch(value, EmailPattern, RegexOptions.IgnoreCase),
+                ColumnType.HtmlFile => value.ToLower().EndsWith(".html") && File.Exists(value),
+                ColumnType.StringInvl => Column.ValidationofStringInvl(value),
                 _ => false
             };
         }

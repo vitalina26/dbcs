@@ -25,7 +25,7 @@ namespace DBManager.Business.Services
         }
         public Table Difference(string firstTableName, string secondTableName)
         {
-            return _dBHelper.Difference(firstTableName, secondTableName);
+            return _dBHelper.Union(firstTableName, secondTableName);
         }
     }
 }

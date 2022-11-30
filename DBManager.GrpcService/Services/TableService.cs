@@ -34,7 +34,7 @@ namespace DBManager.GrpcService.Services
 
         public override Task<Table> Difference(DifferenceRequest model, ServerCallContext context)
         {
-            return Task.FromResult(_dBHelper.Difference(model.FirstTableName, model.SecondTableName));
+            return Task.FromResult(_dBHelper.Unian(model.FirstTableName, model.SecondTableName));
         }
 
         public override Task<Table> GetTableByName(StringValue tableName, ServerCallContext context)

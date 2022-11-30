@@ -6,7 +6,7 @@
         Real,
         Char,
         String,
-        Enum,
-        Email
+        HtmlFile,
+        StringInvl
     }
 }

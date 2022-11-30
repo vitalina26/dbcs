@@ -137,14 +137,14 @@ namespace DBManager
         #endregion
 
         #region Columns
-        public bool CreateColumn(Table table, string columnName, ColumnType columnType, List<string> availableTypes)
+        public bool CreateColumn(Table table, string columnName, ColumnType columnType)
         {
             if (table.Columns.Select(i => i.Name).Contains(columnName))
             {
                 return false;
             }
 
-            table.Columns.Add(new Column(columnName, columnType, availableTypes));
+            table.Columns.Add(new Column(columnName, columnType));
             foreach (var row in table.Rows)
             {
                 row.Values.Add("");
@@ -172,17 +172,14 @@ namespace DBManager
             {
                 var columnData = column.Split('\t', StringSplitOptions.RemoveEmptyEntries).ToList();
                 Enum.TryParse(columnData[1], out ColumnType columnType);
-                var availableValues = new List<string>();
-                if (columnData.Count > 2)
-                    availableValues = columnData[2]?.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
-                table.Columns.Add(new Column(columnData[0], columnType, availableValues));
+                table.Columns.Add(new Column(columnData[0], columnType));
             }
         }
         private void WriteColumns(StreamWriter streamWriter, Table table)
         {
             foreach (var column in table.Columns)
             {
-                streamWriter.Write(column.Name + '\t' + column.Type.ToString() + '\t' + string.Join(',', column.AvailableValues) + _columnsSeparator);
+                streamWriter.Write(column.Name + '\t' + column.Type.ToString() + '\t' + _columnsSeparator);
 
             }
 
@@ -237,7 +234,7 @@ namespace DBManager
 
             return false;
         }
-        public Table Difference(Table firstTable, Table secondTable)
+        public Table Union(Table firstTable, Table secondTable)
         {
             var sameColumns = new List<Column>();
             var result = new Table("difference");

@@ -26,16 +26,7 @@
 
             </label>
         </div>
-        @if (Column.Type == ColumnType.Enum)
-        {
-            <div class="base-input-container long">
-                <label class="base-input">
-                    <InputText placeholder=" " name="name" @bind-Value="_availableValues"/>
-                    <span>Available values(separated by comma)</span>
-                    <ValidationMessage For="() => Column.AvailableValues"></ValidationMessage>
-                </label>
-            </div>
-        }
+        
         @* <div class="base-input-container w-100"> *@
         @*     <label class="base-input"> *@
         @*         <div class="upload-version-data"> *@

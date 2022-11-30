@@ -6,7 +6,7 @@ namespace DBManager.WebUi.Models
         Real,
         Char,
         String,
-        Enum,
-        Email
+        HtmlFile,
+        StringInvl
     }
 }

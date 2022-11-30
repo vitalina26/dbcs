@@ -24,15 +24,14 @@ message Table {
 message Column {
   string name = 1;
   ColumnType type = 2;
-  repeated string availableValues= 3;
 }
 enum ColumnType {
   COLUMN_TYPE_INTEGER = 0;
   COLUMN_TYPE_REAL = 1;
   COLUMN_TYPE_CHAR = 2;
   COLUMN_TYPE_STRING = 3;
-  COLUMN_TYPE_ENUM = 4;
-  COLUMN_TYPE_EMAIL = 5;
+  COLUMN_TYPE_HTMLFILE = 4;
+  COLUMN_TYPE_STRINGINTV = 5;
 }
 
 message Row {

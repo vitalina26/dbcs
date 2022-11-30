@@ -7,14 +7,20 @@ namespace DBManager.GrpcService
 {
     public partial class Column
     {
-        public Column(string name, ColumnType type, List<string> availableValues = null)
+        public Column(string name, ColumnType type)
         {
             Name = name;
             Type = type;
-            AvailableValues.Clear();
-            AvailableValues.AddRange(availableValues);
+           
         }
-        private const string EmailPattern = @"^[\d\w\._\-\+]+@([\d\w\._\-]+\.)+[\w]+$";
+        static public bool ValidationofStringInvl(string v)
+        {
+            string[] t = v.Replace(" ", "").Split(',');
+            if (t.Length == 2 && String.Compare(t[1], t[2]) > 0)
+                return true;
+            else
+                return false;
+        }
 
         public bool IsValid(string value)
         {
@@ -24,9 +30,8 @@ namespace DBManager.GrpcService
                 ColumnType.Real => double.TryParse(value, out _),
                 ColumnType.Char => char.TryParse(value, out _),
                 ColumnType.String => true,
-                ColumnType.Enum => AvailableValues?.Contains(value) ?? false,
-                ColumnType.Email => !string.IsNullOrEmpty(value) &&
-                                    Regex.IsMatch(value, EmailPattern, RegexOptions.IgnoreCase),
+                ColumnType.Htmlfile => value.ToLower().EndsWith(".html") && File.Exists(value),
+                ColumnType.Stringintv => Column.ValidationofStringInvl(value),
                 _ => false
             };
         }

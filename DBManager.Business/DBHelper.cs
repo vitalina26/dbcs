@@ -374,10 +374,7 @@ namespace DBManager.Business
             {
                 var columnData = column.Split('\t', StringSplitOptions.RemoveEmptyEntries).ToList();
                 Enum.TryParse(columnData[1], out ColumnType columnType);
-                var availableValues = new List<string>();
-                if (columnData.Count > 2)
-                    availableValues = columnData[2]?.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
-                table.Columns.Add(new Column(columnData[0], columnType, availableValues));
+                table.Columns.Add(new Column(columnData[0], columnType));
             }
         }
 
@@ -385,7 +382,7 @@ namespace DBManager.Business
         {
             foreach (var column in table.Columns)
             {
-                streamWriter.Write(column.Name + '\t' + column.Type + '\t' + string.Join(',', column.AvailableValues) +
+                streamWriter.Write(column.Name + '\t' + column.Type + '\t' +
                                    _columnsSeparator);
             }
 
@@ -469,13 +466,13 @@ namespace DBManager.Business
             }
         }
 
-        public Table Difference(string firstTableName, string secondTableName)
+        public Table Union(string firstTableName, string secondTableName)
         {
             try
             {
                 var firstTable = GetTableByName(firstTableName);
                 var secondTable = GetTableByName(secondTableName);
-                var result = new Table("difference");
+                var result = new Table("union");
                 foreach (var column in firstTable.Columns.Where(column =>
                              secondTable.Columns.FirstOrDefault(i => i.Name == column.Name && i.Type == column.Type) !=
                              null))
@@ -486,7 +483,6 @@ namespace DBManager.Business
                 if (!result.Columns.Any())
                     return null;
 
-                var tempRows = new List<Row>();
                 foreach (var row in secondTable.Rows)
                 {
                     var newRow = new Row();
@@ -500,7 +496,7 @@ namespace DBManager.Business
                         }
                     }
 
-                    tempRows.Add(newRow);
+                    result.Rows.Add(newRow);
                 }
 
                 foreach (var row in firstTable.Rows)
@@ -514,7 +510,7 @@ namespace DBManager.Business
                         }
                     }
 
-                    if (!tempRows.Any(r => r.Values.SequenceEqual(newRow.Values)))
+                    if (!result.Rows.Any(r => r.Values.SequenceEqual(newRow.Values)))
                         result.Rows.Add(newRow);
                 }
 
